@@ -1,0 +1,63 @@
+pipeline {
+    agent any
+
+    options {
+        timestamps()
+    }
+
+    environment {
+        APP_NAME = "sample-jenkins-app"
+        ENVIRONMENT = "dev"
+    }
+
+    stages {
+        stage('Checkout') {
+            steps {
+                echo "Step 1: Checking out source code..."
+                checkout scm
+            }
+        }
+
+        stage('Build') {
+            steps {
+                echo "Step 2: Building the application..."
+                sh '''
+                  echo "Simulating build..."
+                  sleep 2
+                  echo "Build completed."
+                '''
+            }
+        }
+
+        stage('Test') {
+            steps {
+                echo "Step 3: Running tests..."
+                sh '''
+                  echo "Simulating tests..."
+                  sleep 2
+                  echo "All tests passed."
+                '''
+            }
+        }
+
+        stage('Deploy') {
+            steps {
+                echo "Step 4: Deploying ${APP_NAME} to ${ENVIRONMENT} environment..."
+                sh '''
+                  echo "Simulating deployment..."
+                  sleep 2
+                  echo "Deployment successful."
+                '''
+            }
+        }
+    }
+
+    post {
+        success {
+            echo "Pipeline completed successfully ✅"
+        }
+        failure {
+            echo "Pipeline failed ❌"
+        }
+    }
+}
